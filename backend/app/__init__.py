@@ -483,6 +483,7 @@ def create_app(config_name=None, enable_socketio=True):
         'notification_routes': Blueprint('notification_routes', __name__),
         'theme_routes': Blueprint('theme_routes', __name__),
         'footer_routes': Blueprint('footer_routes', __name__),
+        'homepage_batch_routes': Blueprint('homepage_batch_routes', __name__),
         'ui_batch_routes': Blueprint('ui_batch_routes', __name__),
         'meilisearch_routes': Blueprint('meilisearch_routes', __name__),
         'admin_meilisearch_routes': Blueprint('admin_meilisearch_routes', __name__),
@@ -586,6 +587,10 @@ def create_app(config_name=None, enable_socketio=True):
     @fallback_blueprints['notification_routes'].route('/health', methods=['GET'])
     def fallback_notification_health():
         return jsonify({"status": "ok", "message": "Fallback notification routes active"}), 200
+    
+    @fallback_blueprints['homepage_batch_routes'].route('/health', methods=['GET'])
+    def fallback_homepage_batch_health():
+        return jsonify({"status": "ok", "message": "Fallback homepage batch routes active"}), 200
     
     @fallback_blueprints['theme_routes'].route('/health', methods=['GET'])
     def fallback_theme_health():
@@ -734,6 +739,14 @@ def create_app(config_name=None, enable_socketio=True):
             ('routes.notifications.notification_routes', 'notification_routes'),
             ('backend.app.routes.notifications.notification_routes', 'notification_routes'),
             ('backend.routes.notifications.notification_routes', 'notification_routes')
+        ],
+        'homepage_batch_routes': [
+            ('app.routes.products.homepage_batch_routes', 'homepage_batch_routes'),
+            ('routes.products.homepage_batch_routes', 'homepage_batch_routes'),
+            ('app.routes.products.homepage_batch_routes', 'homepage_batch_bp'),
+            ('routes.products.homepage_batch_routes', 'homepage_batch_bp'),
+            ('backend.app.routes.products.homepage_batch_routes', 'homepage_batch_routes'),
+            ('backend.routes.products.homepage_batch_routes', 'homepage_batch_routes')
         ],
         'ui_batch_routes': [
             ('app.routes.ui.unified_batch_routes', 'ui_batch_routes'),
