@@ -583,9 +583,13 @@ def create_app(config_name=None, enable_socketio=True):
     def fallback_admin_email_health():
         return jsonify({"status": "ok", "message": "Fallback admin email routes active"}), 200
 
-@fallback_blueprints['notification_routes'].route('/health', methods=['GET'])
+    @fallback_blueprints['notification_routes'].route('/health', methods=['GET'])
 def fallback_notification_health():
   return jsonify({"status": "ok", "message": "Fallback notification routes active"}), 200
+  
+    @fallback_blueprints['theme_routes'].route('/health', methods=['GET'])
+def fallback_theme_routes_health():
+  return jsonify({"status": "ok", "message": "Fallback theme routes active"}), 200
   
     @fallback_blueprints['carousel_routes'].route('/health', methods=['GET'])
     def fallback_carousel_health():
@@ -610,10 +614,6 @@ def fallback_notification_health():
     @fallback_blueprints['contact_cta_routes'].route('/health', methods=['GET'])
     def fallback_contact_cta_health():
         return jsonify({"status": "ok", "message": "Fallback contact CTA routes active"}), 200
-
-    @fallback_blueprints['featured_routes'].route('/health', methods=['GET'])
-    def fallback_featured_health():
-        return jsonify({"status": "ok", "message": "Fallback featured routes active"}), 200
     
     @fallback_blueprints['meilisearch_routes'].route('/health', methods=['GET'])
     def fallback_meilisearch_health():
@@ -760,44 +760,6 @@ def fallback_admin_meilisearch_health():
             ('routes.ui.unified_batch_routes', 'ui_batch_routes'),
             ('backend.app.routes.ui.unified_batch_routes', 'ui_batch_routes'),
             ('backend.routes.ui.unified_batch_routes', 'ui_batch_routes')
-        ],
-        'featured_routes': [
-            ('app.routes.products.featured_routes', 'featured_routes'),
-            ('routes.products.featured_routes', 'featured_routes'),
-            ('app.routes.products.featured_routes', 'featured_bp'),
-            ('routes.products.featured_routes', 'featured_bp'),
-            ('app.routes.products.featured_routes', 'featured'),
-            ('routes.products.featured_routes', 'featured'),
-            ('app.routes.products.featured', 'featured_routes'),
-            ('routes.products.featured', 'featured_routes'),
-            ('app.routes.products.featured', 'featured_bp'),
-            ('routes.products.featured', 'featured_bp'),
-            ('backend.app.routes.products.featured_routes', 'featured_routes'),
-            ('backend.routes.products.featured_routes', 'featured_routes'),
-            ('backend.app.routes.products.featured_routes', 'featured_bp'),
-            ('backend.routes.products.featured_routes', 'featured_bp'),
-        ],
-        'homepage_batch_routes': [
-            ('app.routes.products.homepage_batch_routes', 'homepage_batch_routes'),
-            ('routes.products.homepage_batch_routes', 'homepage_batch_routes'),
-            ('backend.app.routes.products.homepage_batch_routes', 'homepage_batch_routes'),
-            ('backend.routes.products.homepage_batch_routes', 'homepage_batch_routes'),
-        ],
-        'meilisearch_routes': [
-            ('app.routes.meilisearch', 'meilisearch_routes'),
-            ('routes.meilisearch', 'meilisearch_routes'),
-            ('app.routes.meilisearch.meilisearch_routes', 'meilisearch_routes'),
-            ('routes.meilisearch.meilisearch_routes', 'meilisearch_routes'),
-            ('backend.app.routes.meilisearch', 'meilisearch_routes'),
-            ('backend.routes.meilisearch', 'meilisearch_routes'),
-        ],
-        'admin_meilisearch_routes': [
-            ('app.routes.meilisearch', 'admin_meilisearch_routes'),
-            ('routes.meilisearch', 'admin_meilisearch_routes'),
-            ('app.routes.meilisearch.meilisearch_routes', 'admin_meilisearch_routes'),
-            ('routes.meilisearch.meilisearch_routes', 'admin_meilisearch_routes'),
-            ('backend.app.routes.meilisearch', 'admin_meilisearch_routes'),
-            ('backend.routes.meilisearch', 'admin_meilisearch_routes'),
         ],
         'admin_settings_routes': [
             ('app.routes.admin.admin_settings_routes', 'admin_settings_routes'),
@@ -1421,12 +1383,8 @@ def fallback_admin_meilisearch_health():
             "product_system": "active",
             "payment_system": {
                 "pesapal": "active" if 'pesapal_routes' in imported_blueprints else "inactive"
-            },
-            "admin_auth_system": "active" if 'admin_auth_routes' in imported_blueprints else "inactive",
-            "admin_google_auth_system": "active" if 'admin_google_auth_routes' in imported_blueprints else "inactive",
-            "admin_email_system": "active" if 'admin_email_routes' in imported_blueprints else "inactive",
-            "google_auth_system": "active" if 'google_auth_routes' in imported_blueprints else "inactive",
-            "meilisearch_system": {
+        },
+        "meilisearch_system": {
                 "routes": "active" if 'meilisearch_routes' in imported_blueprints else "inactive",
                 "admin_routes": "active" if 'admin_meilisearch_routes' in imported_blueprints else "inactive"
             },
