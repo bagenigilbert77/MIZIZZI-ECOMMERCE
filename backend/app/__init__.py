@@ -760,6 +760,30 @@ def create_app(config_name=None, enable_socketio=True):
             ('backend.app.routes.admin.admin_settings_routes', 'admin_settings_routes'),
             ('backend.routes.admin.admin_settings_routes', 'admin_settings_routes')
         ],
+        'theme_routes': [
+            ('app.routes.theme.theme_routes', 'theme_routes'),
+            ('routes.theme.theme_routes', 'theme_routes'),
+            ('backend.app.routes.theme.theme_routes', 'theme_routes'),
+            ('backend.routes.theme.theme_routes', 'theme_routes')
+        ],
+        'footer_routes': [
+            ('app.routes.footer.footer_routes', 'footer_routes'),
+            ('routes.footer.footer_routes', 'footer_routes'),
+            ('backend.app.routes.footer.footer_routes', 'footer_routes'),
+            ('backend.routes.footer.footer_routes', 'footer_routes')
+        ],
+        'meilisearch_routes': [
+            ('app.routes.meilisearch.meilisearch_routes', 'meilisearch_routes'),
+            ('routes.meilisearch.meilisearch_routes', 'meilisearch_routes'),
+            ('backend.app.routes.meilisearch.meilisearch_routes', 'meilisearch_routes'),
+            ('backend.routes.meilisearch.meilisearch_routes', 'meilisearch_routes')
+        ],
+        'admin_meilisearch_routes': [
+            ('app.routes.meilisearch.meilisearch_routes', 'admin_meilisearch_routes'),
+            ('routes.meilisearch.meilisearch_routes', 'admin_meilisearch_routes'),
+            ('backend.app.routes.meilisearch.meilisearch_routes', 'admin_meilisearch_routes'),
+            ('backend.routes.meilisearch.meilisearch_routes', 'admin_meilisearch_routes')
+        ],
     }
     
     # Import blueprints with clean logging
