@@ -488,6 +488,7 @@ def create_app(config_name=None, enable_socketio=True):
         'topbar_routes': Blueprint('topbar_routes', __name__),
         'contact_cta_routes': Blueprint('contact_cta_routes', __name__),
         'featured_routes': Blueprint('featured_routes', __name__),
+        'ui_batch_routes': Blueprint('ui_batch_routes', __name__),
         'meilisearch_routes': Blueprint('meilisearch_routes', __name__),
         'admin_meilisearch_routes': Blueprint('admin_meilisearch_routes', __name__),
         'flash_sale_routes': Blueprint('flash_sale_routes', __name__),
@@ -802,6 +803,12 @@ def create_app(config_name=None, enable_socketio=True):
             ('backend.app.routes.contact_cta.contact_cta_routes', 'contact_cta_routes'),
             ('backend.routes.contact_cta.contact_cta_routes', 'contact_cta_routes')
         ],
+        'ui_batch_routes': [
+            ('app.routes.ui.unified_batch_routes', 'ui_batch_routes'),
+            ('routes.ui.unified_batch_routes', 'ui_batch_routes'),
+            ('backend.app.routes.ui.unified_batch_routes', 'ui_batch_routes'),
+            ('backend.routes.ui.unified_batch_routes', 'ui_batch_routes')
+        ],
         'featured_routes': [
             ('app.routes.products.featured_routes', 'featured_routes'),
             ('routes.products.featured_routes', 'featured_routes'),
@@ -1007,10 +1014,11 @@ def create_app(config_name=None, enable_socketio=True):
         app.register_blueprint(final_blueprints['side_panel_routes'], url_prefix='/api/panels')
         app.register_blueprint(final_blueprints['topbar_routes'], url_prefix='/api/topbar')
         app.register_blueprint(final_blueprints['contact_cta_routes'], url_prefix='/api/contact-cta')
-    app.register_blueprint(final_blueprints['featured_routes'], url_prefix='/api/products/featured')
-    app.register_blueprint(final_blueprints['homepage_batch_routes'], url_prefix='/api')
+        app.register_blueprint(final_blueprints['featured_routes'], url_prefix='/api/products/featured')
+        app.register_blueprint(final_blueprints['homepage_batch_routes'], url_prefix='/api')
+        app.register_blueprint(final_blueprints['ui_batch_routes'], url_prefix='/api')
 
-    app.register_blueprint(final_blueprints['meilisearch_routes'], url_prefix='/api/meilisearch')
+        app.register_blueprint(final_blueprints['meilisearch_routes'], url_prefix='/api/meilisearch')
         app.register_blueprint(final_blueprints['admin_meilisearch_routes'], url_prefix='/api/admin/meilisearch')
         app.logger.info("✅ Meilisearch routes registered successfully")
 
