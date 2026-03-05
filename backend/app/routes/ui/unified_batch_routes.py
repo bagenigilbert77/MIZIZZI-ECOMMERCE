@@ -315,15 +315,18 @@ def get_ui_batch():
         # We need to wrap each fetch with the app context
         results = {}
         
-        def fetch_with_context(fetch_func):
+        # Get the current app instance to pass to threads
+        app = current_app._get_current_object()
+        
+        def fetch_with_context(fetch_func, app_instance):
             """Wrapper to ensure fetch functions run within app context."""
-            with current_app.app_context():
+            with app_instance.app_context():
                 return fetch_func()
         
         with ThreadPoolExecutor(max_workers=8) as executor:
             # Submit all queries at once, wrapped in app context
             futures = {
-                executor.submit(fetch_with_context, fetch_functions[section]): section 
+                executor.submit(fetch_with_context, fetch_functions[section], app): section 
                 for section in sections_to_fetch
             }
             
