@@ -584,16 +584,8 @@ def create_app(config_name=None, enable_socketio=True):
         return jsonify({"status": "ok", "message": "Fallback admin email routes active"}), 200
 
     @fallback_blueprints['notification_routes'].route('/health', methods=['GET'])
-def fallback_notification_health():
-  return jsonify({"status": "ok", "message": "Fallback notification routes active"}), 200
-  
-    @fallback_blueprints['theme_routes'].route('/health', methods=['GET'])
-def fallback_theme_routes_health():
-  return jsonify({"status": "ok", "message": "Fallback theme routes active"}), 200
-  
-    @fallback_blueprints['carousel_routes'].route('/health', methods=['GET'])
-    def fallback_carousel_health():
-        return jsonify({"status": "ok", "message": "Fallback carousel routes active"}), 200
+    def fallback_notification_health():
+        return jsonify({"status": "ok", "message": "Fallback notification routes active"}), 200
     
     @fallback_blueprints['theme_routes'].route('/health', methods=['GET'])
     def fallback_theme_health():
@@ -603,26 +595,14 @@ def fallback_theme_routes_health():
     def fallback_footer_health():
         return jsonify({"status": "ok", "message": "Fallback footer routes active"}), 200
     
-    @fallback_blueprints['side_panel_routes'].route('/health', methods=['GET'])
-    def fallback_side_panel_health():
-        return jsonify({"status": "ok", "message": "Fallback side panel routes active"}), 200
-
-    @fallback_blueprints['topbar_routes'].route('/health', methods=['GET'])
-    def fallback_topbar_health():
-        return jsonify({"status": "ok", "message": "Fallback topbar routes active"}), 200
-
-    @fallback_blueprints['contact_cta_routes'].route('/health', methods=['GET'])
-    def fallback_contact_cta_health():
-        return jsonify({"status": "ok", "message": "Fallback contact CTA routes active"}), 200
-    
     @fallback_blueprints['meilisearch_routes'].route('/health', methods=['GET'])
     def fallback_meilisearch_health():
         return jsonify({"status": "ok", "message": "Fallback Meilisearch routes active"}), 200
     
-@fallback_blueprints['admin_meilisearch_routes'].route('/health', methods=['GET'])
-def fallback_admin_meilisearch_health():
-  return jsonify({"status": "ok", "message": "Fallback admin Meilisearch routes active"}), 200
-  
+    @fallback_blueprints['admin_meilisearch_routes'].route('/health', methods=['GET'])
+    def fallback_admin_meilisearch_health():
+        return jsonify({"status": "ok", "message": "Fallback admin Meilisearch routes active"}), 200
+    
     # Blueprint import paths dictionary
     blueprint_imports = {
         'validation_routes': [
