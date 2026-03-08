@@ -4,7 +4,6 @@ import type React from "react"
 import { createContext, useContext, useEffect, useState, useCallback } from "react"
 import type { User } from "@/types/auth"
 import { useRouter, usePathname } from "next/navigation"
-import { API_BASE_URL } from "@/lib/config"
 
 interface AdminAuthContextType {
   user: User | null
@@ -79,9 +78,11 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
         return false
       }
 
-      console.log("[v0] Attempting to refresh admin token with endpoint:", `${API_BASE_URL}/api/admin/refresh`)
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://mizizzi-ecommerce-1.onrender.com"
 
-      const response = await fetch(`${API_BASE_URL}/api/admin/refresh`, {
+      console.log("[v0] Attempting to refresh admin token with endpoint:", `${apiUrl}/api/admin/refresh`)
+
+      const response = await fetch(`${apiUrl}/api/admin/refresh`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -335,6 +336,8 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
   }> => {
     setIsLoading(true)
     try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://mizizzi-ecommerce-1.onrender.com"
+
       const requestBody: any = {
         email: credentials.email, // For backends expecting 'email'
         identifier: credentials.email, // For backends expecting 'identifier'
@@ -345,10 +348,10 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
         requestBody.mfa_token = credentials.mfa_token
       }
 
-      console.log("[v0] Attempting admin login to:", `${API_BASE_URL}/api/admin/login`)
+      console.log("[v0] Attempting admin login to:", `${apiUrl}/api/admin/login`)
       console.log("[v0] Request body keys:", Object.keys(requestBody))
 
-      const response = await fetch(`${API_BASE_URL}/api/admin/login`, {
+      const response = await fetch(`${apiUrl}/api/admin/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

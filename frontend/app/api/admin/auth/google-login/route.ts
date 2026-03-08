@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { API_BASE_URL } from "@/lib/config"
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://mizizzi-ecommerce-1.onrender.com"
 
 export async function POST(request: NextRequest) {
   try {
