@@ -1,13 +1,7 @@
 // Centralized API configuration
 
-// Backend URL for server-side requests
-export const BACKEND_API_URL =
-  process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_BACKEND_URL || "https://mizizzi-ecommerce-1.onrender.com"
-
-// For client-side requests, use local proxies to avoid CORS issues
-// For server-side requests, use the full backend URL
 export const API_BASE_URL =
-  typeof window !== "undefined" ? "" : BACKEND_API_URL
+  process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_BACKEND_URL || "https://mizizzi-ecommerce-1.onrender.com"
 
 // Debug: Log which URL is being used (only in development)
 if (typeof window === "undefined" && process.env.NODE_ENV === "development") {
@@ -28,9 +22,7 @@ export const SITE_URL =
 
 // Helper to construct API endpoints
 export const getApiEndpoint = (path: string): string => {
-  // For client-side, use local proxies (empty base URL)
-  // For server-side, use backend URL
-  const base = (typeof window !== "undefined" ? "" : BACKEND_API_URL).replace(/\/+$/, "") // Remove trailing slashes
+  const base = API_BASE_URL.replace(/\/+$/, "") // Remove trailing slashes
   const cleanPath = path.startsWith("/") ? path : `/${path}`
   return `${base}${cleanPath}`
 }

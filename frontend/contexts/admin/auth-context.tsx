@@ -78,10 +78,11 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
         return false
       }
 
-      console.log("[v0] Attempting to refresh admin token with local proxy endpoint")
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://mizizzi-ecommerce-1.onrender.com"
 
-      // Use local proxy endpoint to avoid CORS issues
-      const response = await fetch(`/api/admin/refresh`, {
+      console.log("[v0] Attempting to refresh admin token with endpoint:", `${apiUrl}/api/admin/refresh`)
+
+      const response = await fetch(`${apiUrl}/api/admin/refresh`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -187,9 +188,10 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
         }
       }
 
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://mizizzi-ecommerce-1.onrender.com"
+
       try {
-        // Use local proxy endpoint to avoid CORS issues
-        const response = await fetch(`/api/admin/profile`, {
+        const response = await fetch(`${apiUrl}/api/admin/profile`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -218,8 +220,7 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
           if (refreshSuccess) {
             const newToken = localStorage.getItem("admin_token") || localStorage.getItem("mizizzi_token")
             if (newToken) {
-              // Use local proxy endpoint for retry
-              const retryResponse = await fetch(`/api/admin/profile`, {
+              const retryResponse = await fetch(`${apiUrl}/api/admin/profile`, {
                 method: "GET",
                 headers: {
                   "Content-Type": "application/json",
@@ -335,7 +336,8 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
   }> => {
     setIsLoading(true)
     try {
-      // Use local proxy endpoint instead of direct backend call to avoid CORS issues
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://mizizzi-ecommerce-1.onrender.com"
+
       const requestBody: any = {
         email: credentials.email, // For backends expecting 'email'
         identifier: credentials.email, // For backends expecting 'identifier'
@@ -346,10 +348,10 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
         requestBody.mfa_token = credentials.mfa_token
       }
 
-      console.log("[v0] Attempting admin login via proxy to:", `/api/admin/login`)
+      console.log("[v0] Attempting admin login to:", `${apiUrl}/api/admin/login`)
       console.log("[v0] Request body keys:", Object.keys(requestBody))
 
-      const response = await fetch(`/api/admin/login`, {
+      const response = await fetch(`${apiUrl}/api/admin/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -438,11 +440,12 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
   const logout = async () => {
     setIsLoading(true)
     try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://mizizzi-ecommerce-1.onrender.com"
+
       const token = getToken()
       if (token && token.trim()) {
         try {
-          // Use local proxy endpoint for logout
-          await fetch(`/api/admin/logout`, {
+          await fetch(`${apiUrl}/api/admin/logout`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -488,10 +491,10 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const updateProfile = async (data: any): Promise<void> => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://mizizzi-ecommerce-1.onrender.com"
     const token = getToken()
 
-    // Use local proxy endpoint
-    const response = await fetch(`/api/admin/profile`, {
+    const response = await fetch(`${apiUrl}/api/admin/profile`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

@@ -163,8 +163,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const refreshTheme = useCallback(async () => {
     try {
       setIsLoading(true)
-      // Use local proxy endpoint to avoid CORS issues
-      const response = await fetch(`/api/theme/active`)
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL || "https://mizizzi-ecommerce-1.onrender.com"}/api/theme/active`,
+      )
 
       if (!response.ok) {
         throw new Error("Failed to fetch theme")
