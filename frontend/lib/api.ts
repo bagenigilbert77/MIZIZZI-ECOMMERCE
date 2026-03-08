@@ -1,8 +1,5 @@
 import axios, { type InternalAxiosRequestConfig, type AxiosResponse } from "axios"
-
-// Add this at the top of the file if it doesn't exist
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_BACKEND_URL || "https://mizizzi-ecommerce-1.onrender.com"
+import { API_BASE_URL } from "@/lib/config"
 
 // Add request deduplication for product requests to prevent excessive API calls
 // Add this near the top of the file with other helper functions
