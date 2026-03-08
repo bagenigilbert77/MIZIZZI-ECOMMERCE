@@ -3,6 +3,7 @@ import type { AdminPaginatedResponse, ProductCreatePayload } from "@/types/admin
 import type { Product, Category } from "@/types"
 import { productService } from "@/services/product"
 import { cloudinaryService } from "./cloudinary-service"
+import { API_BASE_URL } from "@/lib/config"
 
 // Declare the missing variables
 const productCache = new Map()
@@ -19,8 +20,7 @@ const websocketService = {
  */
 async function prefetchData(path: string, params: Record<string, any> = {}): Promise<boolean> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_BACKEND_URL || ""
-    const url = `${baseUrl}${path}`
+    const url = `${API_BASE_URL}${path}`
 
     const queryParams = new URLSearchParams()
     Object.entries(params).forEach(([key, value]) => {
@@ -200,7 +200,7 @@ export const adminService = {
   // Authentication
   async login(credentials: { email: string; password: string; remember?: boolean }): Promise<AdminLoginResponse> {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/login`, {
+      const response = await fetch(`${API_BASE_URL}/api/admin/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -251,7 +251,7 @@ export const adminService = {
   async logout(): Promise<void> {
     try {
       // Try to call the logout endpoint
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/logout`, {
+      await fetch(`${API_BASE_URL}/api/admin/logout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -281,7 +281,7 @@ export const adminService = {
         return false
       }
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/refresh`, {
+      const response = await fetch(`${API_BASE_URL}/api/admin/refresh`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -330,10 +330,9 @@ export const adminService = {
       }
 
       // Use consistent API base URL
-      const baseUrl = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000"
-      console.log("[v0] Using API base URL:", baseUrl)
+      console.log("[v0] Using API base URL:", API_BASE_URL)
 
-      let url = `${baseUrl}/api/admin/dashboard`
+      let url = `${API_BASE_URL}/api/admin/dashboard`
       if (params) {
         const queryParams = new URLSearchParams()
         if (params.from_date) queryParams.append("from_date", params.from_date)

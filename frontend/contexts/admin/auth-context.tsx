@@ -4,6 +4,7 @@ import type React from "react"
 import { createContext, useContext, useEffect, useState, useCallback } from "react"
 import type { User } from "@/types/auth"
 import { useRouter, usePathname } from "next/navigation"
+import { API_BASE_URL } from "@/lib/config"
 
 interface AdminAuthContextType {
   user: User | null
@@ -78,11 +79,9 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
         return false
       }
 
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://mizizzi-ecommerce-1.onrender.com"
+      console.log("[v0] Attempting to refresh admin token with endpoint:", `${API_BASE_URL}/api/admin/refresh`)
 
-      console.log("[v0] Attempting to refresh admin token with endpoint:", `${apiUrl}/api/admin/refresh`)
-
-      const response = await fetch(`${apiUrl}/api/admin/refresh`, {
+      const response = await fetch(`${API_BASE_URL}/api/admin/refresh`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

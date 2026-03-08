@@ -3,6 +3,7 @@
 import type React from "react"
 import { createContext, useContext, useState, useEffect, useCallback } from "react"
 import { websocketService } from "@/services/websocket"
+import { API_BASE_URL } from "@/lib/config"
 
 interface ThemeColors {
   primary: {
@@ -164,7 +165,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     try {
       setIsLoading(true)
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || "https://mizizzi-ecommerce-1.onrender.com"}/api/theme/active`,
+        `${API_BASE_URL}/api/theme/active`,
       )
 
       if (!response.ok) {
